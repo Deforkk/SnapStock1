@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "743918720740",
+    "firebase_url": "https://snapstock-3c5c0-default-rtdb.firebaseio.com",
+    "project_id": "snapstock-3c5c0",
+    "storage_bucket": "snapstock-3c5c0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743918720740:android:70a5f253abbb91050ebef1",
+        "android_client_info": {
+          "package_name": "com.example.snapstock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcyWwCDFsgCtAQQTc3_E9c0VaO-GBYu-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743918720740:android:0eaac0a1397296070ebef1",
+        "android_client_info": {
+          "package_name": "com.example.snapstock1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcyWwCDFsgCtAQQTc3_E9c0VaO-GBYu-g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

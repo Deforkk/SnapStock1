@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center_vertical|center_horizontal">
+
+    <!-- Аватарка -->
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_default_avatar"
+        android:layout_gravity="center"
+        android:contentDescription="User Avatar"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Имя -->
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:padding="8dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Биография, описание -->
+    <EditText
+        android:id="@+id/etBiography"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Biography"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Кнопка сохранения биографии -->
+    <Button
+        android:id="@+id/btnSaveBiography"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Biography"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- смена пароля -->
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- удаление аккаунта -->
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- логаут -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="@android:color/holo_blue_dark" />
+</LinearLayout>

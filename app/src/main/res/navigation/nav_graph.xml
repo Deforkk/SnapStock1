@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.snapstock1.SignInFragment"
+        android:label="Sign In"
+        tools:layout="@layout/activity_sign_in_fragment">
+
+        <action
+            android:id="@+id/action_signInFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.snapstock1.SignUpFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/activity_sign_up_fragment">
+
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.snapstock1.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <action
+        android:id="@+id/action_profileFragment_to_signInFragment"
+        app:destination="@id/signInFragment" />
+    <action
+        android:id="@+id/action_signInFragment_to_profileFragment"
+        app:destination="@id/profileFragment" />
+    <action
+        android:id="@+id/action_signUpFragment_to_profileFragment"
+        app:destination="@id/profileFragment" />
+
+
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.snapstock1.MainActivity"
+        android:label="Main Activity" />
+</navigation>
