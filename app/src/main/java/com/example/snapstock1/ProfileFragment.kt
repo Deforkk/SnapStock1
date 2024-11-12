@@ -21,6 +21,7 @@ class ProfileFragment : Fragment() {
     private lateinit var userManager: UserManager
     private lateinit var userEmail: String
     private lateinit var userId: String
+    private val defaultAvatarUrl = R.drawable.ic_default_avatar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +32,7 @@ class ProfileFragment : Fragment() {
 
         userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         userEmail = arguments?.getString("userEmail") ?: ""
+
 
         val biographyEditText = view.findViewById<EditText>(R.id.etBiography)
         val profileImageView = view.findViewById<ImageView>(R.id.profileImageView)
@@ -44,8 +46,12 @@ class ProfileFragment : Fragment() {
         userManager.getUserDetails(userId) { user: User? ->
             usernameTextView.text = user?.username ?: "No username"
             Glide.with(this)
-                .load(user?.avatarUrl ?: R.drawable.ic_default_avatar)
+                .load(user?.avatarUrl ?: defaultAvatarUrl)
                 .into(profileImageView)
+        }
+        // Открываем диалог для загрузки новой аватарки
+        profileImageView.setOnClickListener {
+            showAvatarUpdateDialog(profileImageView)
         }
 
         view.findViewById<Button>(R.id.btnChangePassword).setOnClickListener {
@@ -88,7 +94,42 @@ class ProfileFragment : Fragment() {
 
         return view
     }
+    private fun showAvatarUpdateDialog(profileImageView: ImageView) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_avatar, null)
+        val avatarUrlEditText = dialogView.findViewById<EditText>(R.id.etAvatarUrl)
 
+        AlertDialog.Builder(requireContext())
+            .setTitle("Update Avatar")
+            .setView(dialogView)
+            .setPositiveButton("Save") { _, _ ->
+                val newAvatarUrl = avatarUrlEditText.text.toString()
+                if (newAvatarUrl.isNotEmpty()) {
+                    userManager.updateUserAvatar(userId, newAvatarUrl) { success, message ->
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        if (success) {
+                            Glide.with(this)
+                                .load(newAvatarUrl)
+                                .into(profileImageView)
+                        }
+                    }
+                } else {
+                    Toast.makeText(context, "Avatar URL cannot be empty", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Remove Avatar") { _, _ ->
+                userManager.updateUserAvatar(userId, null) { success, message ->
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                    if (success) {
+                        Glide.with(this)
+                            .load(defaultAvatarUrl)
+                            .into(profileImageView)
+                    }
+                }
+            }
+            .setNeutralButton("Cancel", null)
+            .create()
+            .show()
+    }
     // Показать диалог для смены пароля
     private fun showChangePasswordDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)

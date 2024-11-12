@@ -3,6 +3,7 @@ package com.example.snapstock1
 import android.content.Context
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 
 class UserManager(private val context: Context) {
     private val firestore = FirebaseFirestore.getInstance()
@@ -74,7 +75,24 @@ class UserManager(private val context: Context) {
                 onComplete(null)
             }
     }
+    // Обновление аватарки пользователя
+    fun updateUserAvatar(userId: String, avatarUrl: String?, onComplete: (Boolean, String) -> Unit) {
+        val userRef = firestore.collection("users").document(userId)
 
+        val updates = if (avatarUrl != null) {
+            mapOf("avatar_url" to avatarUrl)
+        } else {
+            mapOf("avatar_url" to FieldValue.delete()) // Удаление URL
+        }
+
+        userRef.update(updates)
+            .addOnSuccessListener {
+                onComplete(true, if (avatarUrl != null) "Avatar updated successfully." else "Avatar removed successfully.")
+            }
+            .addOnFailureListener { exception ->
+                onComplete(false, "Error updating avatar: ${exception.message}")
+            }
+    }
     // Получить биографию пользователя
     fun getUserBiography(userId: String, onComplete: (String?) -> Unit) {
         val usersRef = firestore.collection("users")
