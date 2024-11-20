@@ -10,11 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ProfileFragment : Fragment() {
 
@@ -37,7 +37,33 @@ class ProfileFragment : Fragment() {
         val biographyEditText = view.findViewById<EditText>(R.id.etBiography)
         val profileImageView = view.findViewById<ImageView>(R.id.profileImageView)
         val usernameTextView = view.findViewById<TextView>(R.id.usernameTextView)
+        // Настройка нижней панели навигации
+        val bottomNavigation = view.findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
+        bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                /*R.id.nav_home -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+                    true
+                }
+                R.id.nav_discover -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_discoverFragment)
+                    true
+                }
+                R.id.nav_add -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_addArticleFragment)
+                    true
+                }
+                R.id.nav_my_articles -> {
+                    findNavController().navigate(R.id.action_profileFragment_to_myArticlesFragment)
+                    true
+                }*/
+                R.id.nav_profile -> {
+                    true
+                }
+                else -> false
+            }
+        }
         // описание прфиля
         userManager.getUserBiography(userId) { biography ->
             biographyEditText.setText(biography ?: "")

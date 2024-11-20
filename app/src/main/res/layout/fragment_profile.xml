@@ -1,70 +1,87 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_vertical|center_horizontal">
+    android:layout_height="match_parent">
 
-    <!-- Аватарка -->
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_default_avatar"
-        android:layout_gravity="center"
-        android:contentDescription="User Avatar"
-        android:layout_marginBottom="16dp"/>
+    <!-- Содержимое профиля -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- Имя -->
-    <TextView
-        android:id="@+id/usernameTextView"
+        <!-- Аватарка -->
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="User Avatar"
+            android:src="@drawable/ic_default_avatar" />
+
+        <!-- Имя -->
+        <TextView
+            android:id="@+id/usernameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:padding="8dp"
+            android:text="Username"
+            android:textSize="18sp" />
+
+        <!-- Биография, описание -->
+        <EditText
+            android:id="@+id/etBiography"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="Biography"
+            android:inputType="textMultiLine" />
+
+        <!-- Кнопка сохранения биографии -->
+        <Button
+            android:id="@+id/btnSaveBiography"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Save Biography" />
+
+        <!-- смена пароля -->
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Change Password" />
+
+        <!-- удаление аккаунта -->
+        <Button
+            android:id="@+id/btnDeleteAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Delete Account"
+            android:textColor="@android:color/holo_red_dark" />
+
+        <!-- логаут -->
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:textColor="@android:color/holo_blue_dark" />
+    </LinearLayout>
+    <!-- Нижняя навигация -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:textSize="18sp"
-        android:layout_gravity="center"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Биография, описание -->
-    <EditText
-        android:id="@+id/etBiography"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Biography"
-        android:inputType="textMultiLine"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- Кнопка сохранения биографии -->
-    <Button
-        android:id="@+id/btnSaveBiography"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Biography"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- смена пароля -->
-    <Button
-        android:id="@+id/btnChangePassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Change Password"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- удаление аккаунта -->
-    <Button
-        android:id="@+id/btnDeleteAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete Account"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_marginBottom="16dp"/>
-
-    <!-- логаут -->
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:textColor="@android:color/holo_blue_dark" />
-</LinearLayout>
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_menu"
+        app:backgroundTint="@color/white"
+        app:itemIconTint="@color/selector_bottom_nav"
+        app:itemTextColor="@color/selector_bottom_nav"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
