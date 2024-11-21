@@ -1,0 +1,49 @@
+<!-- fragment_settings.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Текущая почта -->
+    <TextView
+        android:id="@+id/tvCurrentEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Current Email: user@example.com"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Кнопка для изменения почты -->
+    <Button
+        android:id="@+id/btnChangeEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Change Email" />
+    <!-- Смена пароля -->
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Change Password" />
+
+    <!-- Удаление аккаунта -->
+    <Button
+        android:id="@+id/btnDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Delete Account"
+        android:textColor="@android:color/holo_red_dark" />
+
+    <!-- Логаут -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="@android:color/holo_blue_dark" />
+
+</LinearLayout>

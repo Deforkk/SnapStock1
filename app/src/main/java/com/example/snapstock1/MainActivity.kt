@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
+        supportActionBar?.hide() // Полностью скрыть ActionBar
     }
 
     override fun onSupportNavigateUp(): Boolean {

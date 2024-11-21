@@ -40,6 +40,11 @@ class ProfileFragment : Fragment() {
         // Настройка нижней панели навигации
         val bottomNavigation = view.findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
+        // Переход к настройкам
+        view.findViewById<ImageView>(R.id.icSettings).setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
+        }
+
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 /*R.id.nav_home -> {
@@ -61,10 +66,11 @@ class ProfileFragment : Fragment() {
                 R.id.nav_profile -> {
                     true
                 }
+
                 else -> false
             }
         }
-        // описание прфиля
+        // описание прoфиля
         userManager.getUserBiography(userId) { biography ->
             biographyEditText.setText(biography ?: "")
         }
@@ -78,10 +84,6 @@ class ProfileFragment : Fragment() {
         // Открываем диалог для загрузки новой аватарки
         profileImageView.setOnClickListener {
             showAvatarUpdateDialog(profileImageView)
-        }
-
-        view.findViewById<Button>(R.id.btnChangePassword).setOnClickListener {
-            showChangePasswordDialog()
         }
 
         // Кнопка для сохранения биографии
@@ -100,28 +102,12 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        view.findViewById<Button>(R.id.btnDeleteAccount).setOnClickListener {
-            userManager.deleteAccount { success, message ->
-                if (success) {
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                    FirebaseAuth.getInstance().signOut() // Логаут
-                    findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
-                } else {
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
-        // логаут
-        view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
-            FirebaseAuth.getInstance().signOut() // Логаут
-            findNavController().navigate(R.id.action_profileFragment_to_signInFragment)
-        }
-
         return view
     }
+
     private fun showAvatarUpdateDialog(profileImageView: ImageView) {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_avatar, null)
+        val dialogView =
+            LayoutInflater.from(requireContext()).inflate(R.layout.dialog_update_avatar, null)
         val avatarUrlEditText = dialogView.findViewById<EditText>(R.id.etAvatarUrl)
 
         AlertDialog.Builder(requireContext())
@@ -155,33 +141,6 @@ class ProfileFragment : Fragment() {
             .setNeutralButton("Cancel", null)
             .create()
             .show()
-    }
-    // Показать диалог для смены пароля
-    private fun showChangePasswordDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.dialog_change_password, null)
-        val passwordEditText = dialogView.findViewById<EditText>(R.id.etNewPassword)
-
-        val dialog = AlertDialog.Builder(requireContext())
-            .setTitle("Change Password")
-            .setView(dialogView)
-            .setPositiveButton("Confirm") { _, _ ->
-                val newPassword = passwordEditText.text.toString()
-                if (newPassword.isNotBlank()) {
-                    userManager.changePassword(newPassword) { success, message ->
-                        if (success) {
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        } else {
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                } else {
-                    Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton("Cancel", null)
-            .create()
-
-        dialog.show()
     }
 
     private fun hashPassword(password: String): String {

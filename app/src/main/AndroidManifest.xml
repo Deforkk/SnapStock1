@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SnapStock"
         tools:targetApi="31">
         <activity
+            android:name=".SettingsFragment"
+            android:exported="false" />
+        <activity
             android:name=".ProfileFragment"
             android:exported="false" />
         <activity
@@ -24,11 +27,9 @@
         <activity
             android:name=".SignUpFragment"
             android:exported="false" />
-
         <activity
             android:name=".BottomNavigationMenu"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
