@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.snapstock1.HomeFragment
 
 class BottomNavigationMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,15 +14,16 @@ class BottomNavigationMenu : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
         // Загрузка начального фрагмента (Home)
-        loadFragment(ProfileFragment())
+        loadFragment(HomeFragment())
+        //bottomNavigationView.selectedItemId = R.id.nav_home
 
         // Обработка выбора пунктов навигации
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                /*R.id.nav_home -> loadFragment(HomeFragment())
-                R.id.nav_discover -> loadFragment(DiscoverFragment())
-                R.id.nav_add -> loadFragment(AddArticleFragment())
-                R.id.nav_my_articles -> loadFragment(MyArticlesFragment())*/
+                R.id.nav_home -> loadFragment(HomeFragment())
+                //R.id.nav_discover -> loadFragment(DiscoverFragment())
+                //R.id.nav_add -> loadFragment(AddArticleFragment())
+                //R.id.nav_my_articles -> loadFragment(MyArticlesFragment())*/
                 R.id.nav_profile -> loadFragment(ProfileFragment())
                 else -> false
             }

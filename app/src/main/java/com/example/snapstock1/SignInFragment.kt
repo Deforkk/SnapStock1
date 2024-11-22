@@ -39,7 +39,7 @@ class SignInFragment : Fragment() {
             userManager.loginUser(email, password) { success, message ->
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 if (success) {
-                    findNavController().navigate(R.id.action_signInFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
                 }
             }
         }
