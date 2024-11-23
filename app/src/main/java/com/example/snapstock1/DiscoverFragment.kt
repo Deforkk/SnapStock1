@@ -15,14 +15,14 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MyArticlesFragment : Fragment() {
+class DiscoverFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_my_articles, container, false)
+        val view = inflater.inflate(R.layout.fragment_discover, container, false)
 
         // Настройка нижней панели навигации
         val bottomNavigation = view.findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -33,16 +33,16 @@ class MyArticlesFragment : Fragment() {
                     findNavController().navigate(R.id.action_profileFragment_to_addArticleFragment)
                     true
                 }
-                R.id.nav_discover -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_discoverFragment)
+                R.id.nav_my_articles -> {
+                    findNavController().navigate(R.id.action_discoverFragment_to_myArticlesFragment)
                     true
                 }
                 R.id.nav_home -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_discoverFragment_to_homeFragment)
                     true
                 }
                 R.id.nav_profile -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_discoverFragment_to_profileFragment)
                     true
                 }
 

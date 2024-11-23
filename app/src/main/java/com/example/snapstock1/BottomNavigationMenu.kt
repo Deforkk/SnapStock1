@@ -21,9 +21,9 @@ class BottomNavigationMenu : AppCompatActivity() {
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> loadFragment(HomeFragment())
-                //R.id.nav_discover -> loadFragment(DiscoverFragment())
-                //R.id.nav_add -> loadFragment(AddArticleFragment())
-                //R.id.nav_my_articles -> loadFragment(MyArticlesFragment())*/
+                R.id.nav_discover -> loadFragment(DiscoverFragment())
+                R.id.nav_add -> loadFragment(AddArticleFragment())
+                R.id.nav_my_articles -> loadFragment(MyArticlesFragment())
                 R.id.nav_profile -> loadFragment(ProfileFragment())
                 else -> false
             }

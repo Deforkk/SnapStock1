@@ -29,19 +29,14 @@ class HomeFragment : Fragment() {
 
             bottomNavigation.setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    /*R.id.nav_home -> {
-                        findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
-                        true
-                    }
-                    R.id.nav_discover -> {
-                        findNavController().navigate(R.id.action_profileFragment_to_discoverFragment)
-                        true
-                    }
                     R.id.nav_add -> {
                         findNavController().navigate(R.id.action_profileFragment_to_addArticleFragment)
                         true
                     }
-                    */
+                    R.id.nav_discover -> {
+                        findNavController().navigate(R.id.action_homeFragment_to_discoverFragment)
+                        true
+                    }
                     R.id.nav_profile -> {
                         findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
                         true
