@@ -18,9 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginStart="30dp"
-            android:text="SnapStock"
+            android:text="My Articles"
             android:textColor="@android:color/black"
             android:textStyle="bold"
             android:textSize="18sp" />

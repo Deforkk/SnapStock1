@@ -41,12 +41,13 @@ class HomeFragment : Fragment() {
                         findNavController().navigate(R.id.action_profileFragment_to_addArticleFragment)
                         true
                     }
-                    R.id.nav_my_articles -> {
-                        findNavController().navigate(R.id.action_profileFragment_to_myArticlesFragment)
-                        true
-                    }*/
+                    */
                     R.id.nav_profile -> {
                         findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
+                        true
+                    }
+                    R.id.nav_my_articles -> {
+                        findNavController().navigate(R.id.action_profileFragment_to_myArticlesFragment)
                         true
                     }
 

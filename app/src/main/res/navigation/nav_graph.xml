@@ -51,6 +51,9 @@
         android:id="@+id/action_profileFragment_to_homeFragment"
         app:destination="@id/homeFragment" />
     <action
+        android:id="@+id/action_profileFragment_to_myArticlesFragment"
+        app:destination="@id/myArticlesFragment" />
+    <action
         android:id="@+id/action_settingsFragment_to_signInFragment"
         app:destination="@id/signInFragment" />
     <action
@@ -68,6 +71,23 @@
     <action
         android:id="@+id/action_homeFragment_to_profileFragment"
         app:destination="@id/profileFragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_myArticlesFragment"
+        app:destination="@id/myArticlesFragment" />
+
+    <fragment
+        android:id="@+id/myArticlesFragment"
+        android:name="com.example.snapstock1.MyArticlesFragment"
+        android:label="MyArticlesFragment"
+        tools:layout="@layout/fragment_home" />
+    <action
+        android:id="@+id/action_myArticlesFragment_to_profileFragment"
+        app:destination="@id/profileFragment" />
+
+    <action
+        android:id="@+id/action_myArticlesFragment_to_homeFragment"
+        app:destination="@id/homeFragment" />
 
 
     <activity
