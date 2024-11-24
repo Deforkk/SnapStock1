@@ -7,7 +7,9 @@ plugins {
 android {
     namespace 'com.example.snapstock1'
     compileSdk 35
-
+    viewBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.example.snapstock1"
         minSdk 24

@@ -3,38 +3,55 @@ package com.example.snapstock1
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.example.snapstock1.databinding.ActivityBottomNavigationMenuBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.example.snapstock1.HomeFragment
 
 class BottomNavigationMenu : AppCompatActivity() {
+
+    private lateinit var binding: ActivityBottomNavigationMenuBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_bottom_navigation_menu)
+        binding = ActivityBottomNavigationMenuBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-
-        // Загрузка начального фрагмента (Home)
+        /*// Загрузка начального фрагмента (Home)
         loadFragment(HomeFragment())
-        //bottomNavigationView.selectedItemId = R.id.nav_home
 
         // Обработка выбора пунктов навигации
-        bottomNavigationView.setOnItemSelectedListener { item ->
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> loadFragment(HomeFragment())
-                R.id.nav_discover -> loadFragment(DiscoverFragment())
-                R.id.nav_add -> loadFragment(AddArticleFragment())
-                R.id.nav_my_articles -> loadFragment(MyArticlesFragment())
-                R.id.nav_profile -> loadFragment(ProfileFragment())
+                R.id.nav_home -> {
+                    loadFragment(HomeFragment())
+                    true
+                }
+                R.id.nav_discover -> {
+                    loadFragment(DiscoverFragment())
+                    true
+                }
+                R.id.nav_add -> {
+                    loadFragment(AddArticleFragment())
+                    true
+                }
+                R.id.nav_my_articles -> {
+                    loadFragment(MyArticlesFragment())
+                    true
+                }
+                R.id.nav_profile -> {
+                    loadFragment(ProfileFragment())
+                    true
+                }
                 else -> false
             }
         }
+*/
     }
 
-    // Метод для загрузки фрагмента
-    private fun loadFragment(fragment: Fragment): Boolean {
+    // Метод для загрузки фрагментов
+   /* private fun loadFragment(fragment: Fragment): Boolean {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
         return true
-    }
+    }*/
 }
