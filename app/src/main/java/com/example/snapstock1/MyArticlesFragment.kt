@@ -9,47 +9,29 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.snapstock1.databinding.FragmentMyArticlesBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.snapstock1.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
-class MyArticlesFragment : Fragment() {
+class MyArticlesFragment : BottomNavigationFragment() {
+
+    private var _binding: FragmentMyArticlesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_my_articles, container, false)
+        _binding = FragmentMyArticlesBinding.inflate(inflater, container, false)
 
         // Настройка нижней панели навигации
-        val bottomNavigation = view.findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        setupBottomNavigation(binding.bottomNavigation)
 
-        bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_add -> {
-                    findNavController().navigate(R.id.action_profileFragment_to_addArticleFragment)
-                    true
-                }
-                R.id.nav_discover -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_discoverFragment)
-                    true
-                }
-                R.id.nav_home -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_homeFragment)
-                    true
-                }
-                R.id.nav_profile -> {
-                    findNavController().navigate(R.id.action_myArticlesFragment_to_profileFragment)
-                    true
-                }
-
-                else -> false
-            }
-        }
-
-        return view
+        return binding.root
     }
 }
