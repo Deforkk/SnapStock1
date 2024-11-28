@@ -76,6 +76,7 @@ class ProfileFragment : BottomNavigationFragment() {
         // Загрузка данных пользователя
         userManager.getUserDetails(userId) { user ->
             binding.usernameTextView.text = user?.username ?: "No username"
+            binding.userEmailTextView.text = user?.email ?: "No email" // Отображаем email
             Glide.with(this)
                 .load(user?.avatarUrl ?: defaultAvatarUrl)
                 .into(binding.profileImageView)

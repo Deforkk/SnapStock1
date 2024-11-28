@@ -66,7 +66,8 @@ class UserManager(private val context: Context) {
                 if (document.exists()) {
                     val username = document.getString("username")
                     val avatarUrl = document.getString("avatar_url")
-                    onComplete(User(username, avatarUrl))
+                    val email = document.getString("email")
+                    onComplete(User(username, avatarUrl, email))
                 } else {
                     onComplete(null)
                 }
