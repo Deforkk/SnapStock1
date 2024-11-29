@@ -1,3 +1,4 @@
+
 package com.example.snapstock1
 
 import android.os.Bundle
@@ -29,4 +30,5 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
+
 
