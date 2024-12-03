@@ -180,4 +180,43 @@ class UserManager(private val context: Context) {
             onComplete(false, "User is not logged in.")
         }
     }
+
+    //Репорт проблемы
+    fun reportProblem(subject: String, description: String, email: String?, onComplete: (Boolean, String) -> Unit) {
+        val user = auth.currentUser
+        val problemData = hashMapOf(
+            "timestamp" to System.currentTimeMillis(),
+            "subject" to subject,
+            "description" to description,
+            "email" to email,
+            "userId" to user?.uid
+        )
+
+        firestore.collection("reports").add(problemData)
+            .addOnSuccessListener {
+                onComplete(true, "The issue has been sent successfully.")
+            }
+            .addOnFailureListener { exception ->
+                onComplete(false, "Error sending problem: ${exception.message}")
+            }
+    }
+
+    // Лайк на посты
+    fun addLike(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
+        val likeData = hashMapOf(
+            "postId" to postId,
+            "userId" to userId
+
+        )
+        firestore.collection("likes").document(postId).set(likeData)
+            .addOnSuccessListener { onComplete(true) }
+            .addOnFailureListener { onComplete(false) }
+    }
+
+    //Удаление лайка
+    fun removeLike(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
+        firestore.collection("likes").document(postId).delete()
+            .addOnSuccessListener { onComplete(true) }
+            .addOnFailureListener { onComplete(false) }
+    }
 }

@@ -2,7 +2,9 @@
 <!-- item_post.xml -->
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
     android:elevation="4dp">
@@ -43,13 +45,47 @@
             android:textSize="12sp"
             android:textColor="#999" />
 
+
+
         <TextView
             android:id="@+id/postDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#999" />
+
+
+
+
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end">
+
+        <ImageButton
+            android:id="@+id/unlikeButton"
+
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_heart_outline"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/likeButton"
+            android:layout_width="46dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="string"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_heart_filled" />
+
+    </FrameLayout>
 </androidx.cardview.widget.CardView>
 
 

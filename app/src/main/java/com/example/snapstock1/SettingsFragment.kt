@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.semantics.text
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -26,6 +27,11 @@ class SettingsFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
         userManager = UserManager(requireContext())
+        val reportProblemButton = view.findViewById<Button>(R.id.ReportProblem)
+        reportProblemButton.setOnClickListener {
+            showReportProblemDialog()
+        }
+
         userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown Email"
 
@@ -156,6 +162,34 @@ class SettingsFragment : Fragment() {
                     }
                 } else {
                     Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+
+        dialog.show()
+    }
+    //Показать диалог для репорта проблем
+    private fun showReportProblemDialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.report_problem_dialog, null)
+        val subjectEditText = dialogView.findViewById<EditText>(R.id.subjectEditText)
+        val descriptionEditText = dialogView.findViewById<EditText>(R.id.descriptionEditText)
+        val emailEditText = dialogView.findViewById<EditText>(R.id.emailEditText)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setTitle("Report a problem")
+            .setView(dialogView)
+            .setPositiveButton("Send") { _, _ ->
+                val subject = subjectEditText.text.toString()
+                val description = descriptionEditText.text.toString()
+                val email = emailEditText.text.toString()
+
+                userManager.reportProblem(subject, description, email) { success, message ->
+                    if (success) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Error sending report: $message", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
             .setNegativeButton("Cancel", null)
