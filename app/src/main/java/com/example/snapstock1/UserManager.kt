@@ -180,4 +180,24 @@ class UserManager(private val context: Context) {
             onComplete(false, "User is not logged in.")
         }
     }
+
+    //Репорт проблемы
+    fun reportProblem(subject: String, description: String, email: String?, onComplete: (Boolean, String) -> Unit) {
+        val user = auth.currentUser
+        val problemData = hashMapOf(
+            "timestamp" to System.currentTimeMillis(),
+            "subject" to subject,
+            "description" to description,
+            "email" to email,
+            "userId" to user?.uid
+        )
+
+        firestore.collection("reports").add(problemData)
+            .addOnSuccessListener {
+                onComplete(true, "The issue has been sent successfully.")
+            }
+            .addOnFailureListener { exception ->
+                onComplete(false, "Error sending problem: ${exception.message}")
+            }
+    }
 }
