@@ -43,6 +43,7 @@
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Logout"
         android:textColor="@android:color/holo_blue_dark" />
 
@@ -50,7 +51,16 @@
         android:id="@+id/ReportProblem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Report problem" />
+
+
+    <Button
+        android:id="@+id/FaqButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Snapstock FAQ"
+        android:textColor="@android:color/holo_blue_dark"/>
 
 
 </LinearLayout>

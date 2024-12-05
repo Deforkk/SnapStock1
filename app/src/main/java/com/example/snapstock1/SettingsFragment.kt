@@ -1,7 +1,10 @@
 package com.example.snapstock1
 
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,10 +12,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.compose.ui.semantics.text
+import androidx.core.content.FileProvider
+
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.EmailAuthProvider
+
+import android.content.Intent
+
+import java.io.File
+import java.io.FileOutputStream
+
 
 class SettingsFragment : Fragment() {
 
@@ -30,6 +42,13 @@ class SettingsFragment : Fragment() {
         reportProblemButton.setOnClickListener {
             showReportProblemDialog()
         }
+
+        val faqButton = view.findViewById<Button>(R.id.FaqButton)
+        faqButton.setOnClickListener {
+            openFaqPage()
+        }
+
+
 
         userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown Email"
@@ -58,6 +77,8 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
+
+
 
         // Логаут
         view.findViewById<Button>(R.id.btnLogout).setOnClickListener {
@@ -170,7 +191,7 @@ class SettingsFragment : Fragment() {
     }
 
 
-
+    // Показать диалог для репорта проблемы
     private fun showReportProblemDialog() {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.report_problem_dialog, null)
         val subjectEditText = dialogView.findViewById<EditText>(R.id.subjectEditText)
@@ -199,4 +220,9 @@ class SettingsFragment : Fragment() {
         dialog.show()
     }
 
+    // Показать диалог для FAQ
+    private fun openFaqPage() {
+        val intent = Intent(requireContext(), FaqActivity::class.java)
+        startActivity(intent)
+    }
 }
