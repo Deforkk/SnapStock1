@@ -20,6 +20,7 @@ class PostAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = posts[position]
+        Log.d("PostAdapter", "Binding post: ${post.getString("title")}")
         holder.bind(post)
     }
 

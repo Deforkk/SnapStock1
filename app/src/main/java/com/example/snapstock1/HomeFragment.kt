@@ -37,6 +37,14 @@ class HomeFragment : BottomNavigationFragment() {
         binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewPosts.adapter = SimplePostAdapter(posts, firestore)
 
+        // Настройка кнопок сортировки
+        binding.sortByDateIcon.setOnClickListener {
+            loadPosts(orderBy = "created_at")
+        }
+
+        binding.sortByLikesIcon.setOnClickListener {
+            loadPosts(orderBy = "likes")
+        }
         loadPosts()
 
         // Настройка нижней панели навигации через метод из родительского класса
@@ -45,51 +53,118 @@ class HomeFragment : BottomNavigationFragment() {
         return binding.root
     }
 
-    private fun loadPosts() {
+    private fun loadPosts(orderBy: String = "created_at") {
+        if (orderBy == "likes") {
+            // Сортировка по лайкам
+            loadPostsByLikes()
+        } else {
+            // Сортировка по дате
+            firestore.collection("pins")
+                .orderBy(orderBy) // Сортировка по полю: "created_at"
+                .get()
+                .addOnSuccessListener { documents ->
+                    posts.clear()
+                    writers.clear()
+
+                    val userIds = mutableSetOf<String>()
+
+                    for (doc in documents) {
+                        posts.add(doc)
+                        val userId = doc.getString("user_id")
+                        if (!userId.isNullOrEmpty()) {
+                            userIds.add(userId)
+                        }
+                    }
+
+                    // Загружаем авторов
+                    loadWriters(userIds)
+
+                    // Обновляем адаптер постов
+                    binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
+                }
+                .addOnFailureListener { e ->
+                    // Обработка ошибки
+                }
+        }
+    }
+
+    private fun loadPostsByLikes() {
+        // Сначала получаем список всех постов
         firestore.collection("pins")
             .get()
-            .addOnSuccessListener { documents ->
-                posts.clear()
-                writers.clear()
+            .addOnSuccessListener { postsDocuments ->
+                val postLikesCount = mutableListOf<Pair<QueryDocumentSnapshot, Long>>()
 
-                val userIds = mutableSetOf<String>() // Список уникальных user_id
+                // Для каждого поста подсчитываем количество лайков
+                for (postDoc in postsDocuments) {
+                    val postId = postDoc.id
+                    firestore.collection("likes")
+                        .whereEqualTo("postId", postId) // Получаем все лайки для этого поста
+                        .get()
+                        .addOnSuccessListener { likesDocs ->
+                            // Количество лайков для этого поста
+                            val likesCount = likesDocs.size().toLong()
 
-                for (doc in documents) {
-                    posts.add(doc)
-                    val userId = doc.getString("user_id")
-                    if (!userId.isNullOrEmpty()) {
-                        userIds.add(userId) // Собираем уникальные user_id
-                    }
+                            // Сохраняем пару (пост, количество лайков)
+                            postLikesCount.add(Pair(postDoc, likesCount))
+
+                            // Когда все посты обработаны
+                            if (postLikesCount.size == postsDocuments.size()) {
+                                // Сортируем по количеству лайков
+                                postLikesCount.sortByDescending { it.second }
+
+                                // Обновляем список постов
+                                posts.clear()
+                                for (pair in postLikesCount) {
+                                    posts.add(pair.first)
+                                }
+
+                                // Загружаем авторов
+                                loadWritersFromPosts(posts)
+
+                                // Обновляем адаптер
+                                binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
+                            }
+                        }
                 }
-
-                // Загружаем данные о пользователях
-                loadWriters(userIds)
-
-                // Обновляем адаптер постов
-                binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
                 // Обработка ошибки
             }
     }
 
+    private fun loadWritersFromPosts(postsList: List<QueryDocumentSnapshot>) {
+        val userIds = mutableSetOf<String>()
+        for (post in postsList) {
+            val userId = post.getString("user_id")
+            if (!userId.isNullOrEmpty()) {
+                userIds.add(userId)
+            }
+        }
+        loadWriters(userIds)
+    }
     private fun loadWriters(userIds: Set<String>) {
-        firestore.collection("users")
-            .whereIn(FieldPath.documentId(), userIds.toList())
-            .get()
-            .addOnSuccessListener { userDocuments ->
-                for (userDoc in userDocuments) {
-                    val username = userDoc.getString("username") ?: "Unknown"
-                    val avatarUrl = userDoc.getString("avatar_url")
-                    writers.add(Writer(username, avatarUrl))
-                }
+        if (userIds.isNotEmpty()) { // Проверка, что userIds не пустой
+            firestore.collection("users")
+                .whereIn(FieldPath.documentId(), userIds.toList()) // Если список не пуст, выполняем запрос
+                .get()
+                .addOnSuccessListener { userDocuments ->
+                    for (userDoc in userDocuments) {
+                        val username = userDoc.getString("username") ?: "Unknown"
+                        val avatarUrl = userDoc.getString("avatar_url")
+                        writers.add(Writer(username, avatarUrl))
+                    }
 
-                // Обновляем адаптер Top Writers
-                binding.recyclerViewTopWriters.adapter = TopWritersAdapter(writers.toList())
-            }
-            .addOnFailureListener { e ->
-                // Обработка ошибки
-            }
+                    // Обновляем адаптер Top Writers
+                    binding.recyclerViewTopWriters.adapter = TopWritersAdapter(writers.toList())
+                }
+                .addOnFailureListener { e ->
+                    // Обработка ошибки
+                }
+        } else {
+            // Если userIds пустой, просто не делаем запрос
+            binding.recyclerViewTopWriters.adapter = TopWritersAdapter(writers.toList())
+        }
     }
 
 

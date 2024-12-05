@@ -47,7 +47,22 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
+            <!-- Иконка сортировки по дате -->
+            <ImageView
+                android:id="@+id/sortByDateIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_sort_date"
+                android:contentDescription="Sort by Date"
+                android:layout_marginEnd="8dp" />
 
+            <!-- Иконка сортировки по лайкам -->
+            <ImageView
+                android:id="@+id/sortByLikesIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_sort_likes"
+                android:contentDescription="Sort by Likes" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPosts"
                 android:layout_width="match_parent"
