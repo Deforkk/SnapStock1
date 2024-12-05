@@ -40,15 +40,53 @@ class SimplePostAdapter(
         private val firestore: FirebaseFirestore
     ) : RecyclerView.ViewHolder(binding.root) {
         private var isLiked = false
+        private var isFavorite = false
         private fun updateLikeButtonAppearance() {
-            if (isLiked) {
-                binding.likeButton.visibility = View.GONE
-                binding.unlikeButton.visibility = View.VISIBLE
+            binding.likeButton.setImageResource(
+                if (isLiked) R.drawable.ic_heart_outline else R.drawable.ic_heart_filled
+            )
+        }
+
+        private fun updateFavoriteButtonAppearance() {
+            binding.favoriteButton.setImageResource(
+                if (isFavorite) R.drawable.ic_favorites else R.drawable.ic_notfavorites
+            )
+        }
+
+        private fun toggleFavorite(postId: String, userId: String?) {
+            if (!userId.isNullOrEmpty()) {
+                val userManager = UserManager(binding.root.context)
+                if (isFavorite) {
+                    // Remove from favorites
+                    userManager.removeFromFavorites(postId, userId) { success ->
+                        if (success) {
+                            isFavorite = false
+                            updateFavoriteButtonAppearance()
+                            Toast.makeText(binding.root.context, "Removed from favorites", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Handle error
+                            Toast.makeText(binding.root.context, "Failed to remove from favorites", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    // Add to favorites
+                    userManager.addToFavorites(postId, userId) { success ->
+                        if (success) {
+                            isFavorite = true
+                            updateFavoriteButtonAppearance()
+                            Toast.makeText(binding.root.context, "Added to favorites", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Handle error
+                            Toast.makeText(binding.root.context, "Failed to add to favorites", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             } else {
-                binding.likeButton.visibility = View.VISIBLE
-                binding.unlikeButton.visibility = View.GONE
+                // User not logged in
+                Toast.makeText(binding.root.context, "Please log in", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         private fun toggleLike(postId: String, userId: String?) {
             if (!userId.isNullOrEmpty()) {
@@ -140,6 +178,20 @@ class SimplePostAdapter(
                     toggleLike(post.id, currentUserId)
                 }
             }
+
+            // Обработчик кнопки избранного
+            if (!currentUserId.isNullOrEmpty()) {
+                // Проверяем состояние избранного
+                firestore.collection("favorite").document(post.id).get()
+                    .addOnSuccessListener { document ->
+                        isFavorite = document.exists() && document.getString("userId") == currentUserId
+                        updateFavoriteButtonAppearance()
+                    }
+                binding.favoriteButton.setOnClickListener {
+                    toggleFavorite(post.id, currentUserId)
+                }
+            }
+
         }
 
     }

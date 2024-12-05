@@ -46,7 +46,6 @@
             android:textColor="#999" />
 
 
-
         <TextView
             android:id="@+id/postDate"
             android:layout_width="wrap_content"
@@ -55,37 +54,74 @@
             android:textColor="#999" />
 
 
-
-
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end">
+        android:layout_gravity="bottom|end"
+        android:padding="16dp">
 
+        <!-- Кнопка "Избранное" -->
         <ImageButton
-            android:id="@+id/unlikeButton"
-
+            android:id="@+id/favoriteButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_heart_outline"
             android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Избранное"
             android:padding="8dp"
             android:scaleType="centerInside"
-            android:visibility="gone" />
+            android:src="@drawable/ic_favorites"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" />
 
+        <!-- Кнопка "Не избранное" -->
         <ImageButton
-            android:id="@+id/likeButton"
-            android:layout_width="46dp"
+            android:id="@+id/unfavoriteButton"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="string"
+            android:contentDescription="Не избранное"
             android:padding="8dp"
             android:scaleType="centerInside"
-            android:src="@drawable/ic_heart_filled" />
+            android:src="@drawable/ic_notfavorites"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" />
 
-    </FrameLayout>
+        <!-- Кнопка "Лайк" -->
+        <ImageButton
+            android:id="@+id/likeButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Лайк"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_heart_filled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favoriteButton"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Кнопка "Не лайк" -->
+        <ImageButton
+            android:id="@+id/unlikeButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Не лайк"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_heart_outline"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favoriteButton"
+            android:layout_marginEnd="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>
 
 

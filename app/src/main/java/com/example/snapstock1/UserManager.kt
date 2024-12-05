@@ -223,4 +223,28 @@ class UserManager(private val context: Context) {
                 onComplete(false)
             }
     }
+
+    fun addToFavorites(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
+        val favoriteData = hashMapOf(
+            "postId" to postId,
+            "userId" to userId
+        )
+        firestore.collection("favorite").document(postId).set(favoriteData)
+            .addOnSuccessListener {
+                onComplete(true)
+            }
+            .addOnFailureListener {
+                onComplete(false)
+            }
+    }
+
+    fun removeFromFavorites(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
+        firestore.collection("favorite").document(postId).delete()
+            .addOnSuccessListener {
+                onComplete(true)
+            }
+            .addOnFailureListener {
+                onComplete(false)
+            }
+    }
 }
