@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.compose.ui.semantics.text
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -169,7 +168,6 @@ class SettingsFragment : Fragment() {
 
         dialog.show()
     }
-    //Показать диалог для репорта проблем
     private fun showReportProblemDialog() {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.report_problem_dialog, null)
         val subjectEditText = dialogView.findViewById<EditText>(R.id.subjectEditText)
@@ -197,4 +195,5 @@ class SettingsFragment : Fragment() {
 
         dialog.show()
     }
+
 }

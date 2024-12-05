@@ -201,22 +201,26 @@ class UserManager(private val context: Context) {
             }
     }
 
-    // Лайк на посты
     fun addLike(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
         val likeData = hashMapOf(
             "postId" to postId,
             "userId" to userId
-
         )
         firestore.collection("likes").document(postId).set(likeData)
-            .addOnSuccessListener { onComplete(true) }
-            .addOnFailureListener { onComplete(false) }
+            .addOnSuccessListener {
+                onComplete(true)
+            }
+            .addOnFailureListener {
+                onComplete(false)
+            }
     }
-
-    //Удаление лайка
     fun removeLike(postId: String, userId: String, onComplete: (Boolean) -> Unit) {
         firestore.collection("likes").document(postId).delete()
-            .addOnSuccessListener { onComplete(true) }
-            .addOnFailureListener { onComplete(false) }
+            .addOnSuccessListener {
+                onComplete(true)
+            }
+            .addOnFailureListener {
+                onComplete(false)
+            }
     }
 }
