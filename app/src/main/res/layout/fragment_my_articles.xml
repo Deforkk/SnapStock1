@@ -1,68 +1,28 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!-- Menu up -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
+    <!-- RecyclerView для отображения списка постов -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMyArticles"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/white">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Логотип или название продукта -->
-        <TextView
-            android:id="@+id/toolbarTitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="30dp"
-            android:text="My Articles"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="18sp" />
-
-        <!-- Правые кнопки -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="150dp"
-            android:gravity="end|center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/icSett"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="12dp"
-                android:clickable="true"
-                android:contentDescription="Settings"
-                android:focusable="true"
-                android:src="@drawable/ic_settings" />
-
-            <ImageView
-                android:id="@+id/icSettings"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="0dp"
-                android:clickable="true"
-                android:contentDescription="Settings"
-                android:focusable="true"
-                android:src="@drawable/ic_settings" />
-
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
+    <!-- BottomNavigation для навигации -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         app:menu="@menu/bottom_nav_menu"
         app:backgroundTint="@color/white"
         app:itemIconTint="@color/selector_bottom_nav"
-        app:itemTextColor="@color/selector_bottom_nav" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        app:itemTextColor="@color/selector_bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

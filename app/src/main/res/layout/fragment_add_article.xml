@@ -1,59 +1,84 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="AddArticleFragment">
 
+    <!-- Кнопка закрытия -->
+    <ImageView
+        android:id="@+id/icClose"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/close"
+        android:src="@drawable/ic_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Menu up -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar1"
-        android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/white">
+    <!-- Заголовок -->
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter title"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@id/icClose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
 
-        <!-- Логотип или название  -->
-        <ImageView
-            android:id="@+id/icClose"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="0dp"
-            android:clickable="true"
-            android:contentDescription="Settings"
-            android:focusable="true"
-            android:src="@drawable/ic_close" />
+    <!-- Описание -->
+    <EditText
+        android:id="@+id/etDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter description"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@id/etTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
 
-        <TextView
-            android:id="@+id/toolbarTitle1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:layout_marginEnd="25dp"
-            android:layout_marginStart="30dp"
-            android:text="CreateArticle"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:textSize="18sp" />
+    <!-- Ссылка на изображение -->
+    <EditText
+        android:id="@+id/etImageUrl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter image URL"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@id/etDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
 
-        <!-- Правые кнопки -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="150dp"
-            android:gravity="end|center_vertical"
-            android:orientation="horizontal">
+    <!-- Теги -->
+    <EditText
+        android:id="@+id/etTags"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter tags (comma separated)"
+        android:padding="16dp"
+        android:background="@drawable/edit_text_background"
+        app:layout_constraintTop_toBottomOf="@id/etImageUrl"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
 
-            <ImageView
-                android:id="@+id/icSettings"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="0dp"
-                android:clickable="true"
-                android:contentDescription="Settings"
-                android:focusable="true"
-                android:src="@drawable/ic_settings" />
+    <!-- Кнопка сохранения -->
+    <Button
+        android:id="@+id/btnSavePost"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Save Post"
+        app:layout_constraintTop_toBottomOf="@id/etTags"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp" />
 
-        </LinearLayout>
-    </androidx.appcompat.widget.Toolbar>
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
