@@ -168,6 +168,9 @@ class SettingsFragment : Fragment() {
 
         dialog.show()
     }
+
+
+
     private fun showReportProblemDialog() {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.report_problem_dialog, null)
         val subjectEditText = dialogView.findViewById<EditText>(R.id.subjectEditText)
