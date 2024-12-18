@@ -1,9 +1,12 @@
 package com.example.snapstock1
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +23,8 @@ class HomeFragment : BottomNavigationFragment() {
     private val firestore = FirebaseFirestore.getInstance()
     private val posts = mutableListOf<QueryDocumentSnapshot>()
     private val writers = mutableSetOf<Writer>() // Список уникальных авторов
+    private var currentSortOrder = "created_at"
+    private var currentLikeFilter: Pair<Long, Long>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,18 +44,53 @@ class HomeFragment : BottomNavigationFragment() {
 
         // Настройка кнопок сортировки
         binding.sortByDateIcon.setOnClickListener {
-            loadPosts(orderBy = "created_at")
+            currentSortOrder = "created_at"
+            loadPosts(orderBy = currentSortOrder)
         }
 
         binding.sortByLikesIcon.setOnClickListener {
-            loadPosts(orderBy = "likes")
+            currentSortOrder = "likes"
+            loadPosts(orderBy = currentSortOrder)
         }
+
+        // Добавляем кнопку фильтрации по лайкам
+        binding.filterByLikesIcon.setOnClickListener {
+            showLikesFilterDialog()
+        }
+
         loadPosts()
 
         // Настройка нижней панели навигации через метод из родительского класса
         setupBottomNavigation(binding.bottomNavigation)
-        
+
         return binding.root
+    }
+
+    private fun showLikesFilterDialog() {
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog_likes_filter)
+
+        val minLikesEditText = dialog.findViewById<EditText>(R.id.min_likes_edit_text)
+        val maxLikesEditText = dialog.findViewById<EditText>(R.id.max_likes_edit_text)
+        val applyFilterButton = dialog.findViewById<Button>(R.id.apply_filter_button)
+        val clearFilterButton = dialog.findViewById<Button>(R.id.clear_filter_button)
+
+        applyFilterButton.setOnClickListener {
+            val minLikes = minLikesEditText.text.toString().toLongOrNull() ?: 0
+            val maxLikes = maxLikesEditText.text.toString().toLongOrNull() ?: Long.MAX_VALUE
+
+            currentLikeFilter = Pair(minLikes, maxLikes)
+            loadPosts(orderBy = currentSortOrder)
+            dialog.dismiss()
+        }
+
+        clearFilterButton.setOnClickListener {
+            currentLikeFilter = null
+            loadPosts(orderBy = currentSortOrder)
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun loadPosts(orderBy: String = "created_at") {
@@ -63,24 +103,7 @@ class HomeFragment : BottomNavigationFragment() {
                 .orderBy(orderBy) // Сортировка по полю: "created_at"
                 .get()
                 .addOnSuccessListener { documents ->
-                    posts.clear()
-                    writers.clear()
-
-                    val userIds = mutableSetOf<String>()
-
-                    for (doc in documents) {
-                        posts.add(doc)
-                        val userId = doc.getString("user_id")
-                        if (!userId.isNullOrEmpty()) {
-                            userIds.add(userId)
-                        }
-                    }
-
-                    // Загружаем авторов
-                    loadWriters(userIds)
-
-                    // Обновляем адаптер постов
-                    binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
+                    filterAndProcessPosts(documents)
                 }
                 .addOnFailureListener { e ->
                     // Обработка ошибки
@@ -113,9 +136,14 @@ class HomeFragment : BottomNavigationFragment() {
                                 // Сортируем по количеству лайков
                                 postLikesCount.sortByDescending { it.second }
 
+                                // Фильтруем по количеству лайков, если установлен фильтр
+                                val filteredPostLikesCount = currentLikeFilter?.let { filter ->
+                                    postLikesCount.filter { it.second in filter.first..filter.second }
+                                } ?: postLikesCount
+
                                 // Обновляем список постов
                                 posts.clear()
-                                for (pair in postLikesCount) {
+                                for (pair in filteredPostLikesCount) {
                                     posts.add(pair.first)
                                 }
 
@@ -133,6 +161,28 @@ class HomeFragment : BottomNavigationFragment() {
             }
     }
 
+    private fun filterAndProcessPosts(documents: com.google.firebase.firestore.QuerySnapshot) {
+        posts.clear()
+        writers.clear()
+
+        val userIds = mutableSetOf<String>()
+
+            for (doc in documents) {
+                posts.add(doc)
+                val userId = doc.getString("user_id")
+                if (!userId.isNullOrEmpty()) {
+                    userIds.add(userId)
+                }
+
+        }
+
+        // Загружаем авторов
+        loadWriters(userIds)
+
+        // Обновляем адаптер постов
+        binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
+    }
+
     private fun loadWritersFromPosts(postsList: List<QueryDocumentSnapshot>) {
         val userIds = mutableSetOf<String>()
         for (post in postsList) {
@@ -143,10 +193,11 @@ class HomeFragment : BottomNavigationFragment() {
         }
         loadWriters(userIds)
     }
+
     private fun loadWriters(userIds: Set<String>) {
-        if (userIds.isNotEmpty()) { // Проверка, что userIds не пустой
+        if (userIds.isNotEmpty()) {
             firestore.collection("users")
-                .whereIn(FieldPath.documentId(), userIds.toList()) // Если список не пуст, выполняем запрос
+                .whereIn(FieldPath.documentId(), userIds.toList())
                 .get()
                 .addOnSuccessListener { userDocuments ->
                     for (userDoc in userDocuments) {
@@ -155,18 +206,15 @@ class HomeFragment : BottomNavigationFragment() {
                         writers.add(Writer(username, avatarUrl))
                     }
 
-                    // Обновляем адаптер Top Writers
                     binding.recyclerViewTopWriters.adapter = TopWritersAdapter(writers.toList())
                 }
                 .addOnFailureListener { e ->
                     // Обработка ошибки
                 }
         } else {
-            // Если userIds пустой, просто не делаем запрос
             binding.recyclerViewTopWriters.adapter = TopWritersAdapter(writers.toList())
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

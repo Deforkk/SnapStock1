@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <!-- Основной контент -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -47,22 +46,59 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
-            <!-- Иконка сортировки по дате -->
-            <ImageView
-                android:id="@+id/sortByDateIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_sort_date"
-                android:contentDescription="Sort by Date"
-                android:layout_marginEnd="8dp" />
 
-            <!-- Иконка сортировки по лайкам -->
-            <ImageView
-                android:id="@+id/sortByLikesIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_sort_likes"
-                android:contentDescription="Sort by Likes" />
+            <!-- Контейнер для иконок сортировки -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Иконка сортировки по дате -->
+                    <ImageView
+                        android:id="@+id/sortByDateIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_sort_date"
+                        android:contentDescription="Sort by Date"
+                        android:padding="6dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <!-- Иконка сортировки по лайкам -->
+                    <ImageView
+                        android:id="@+id/sortByLikesIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_sort_likes"
+                        android:contentDescription="Sort by Likes"
+                        android:padding="6dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+
+                    <!-- Иконка фильтрации по лайкам -->
+                    <ImageView
+                        android:id="@+id/filterByLikesIcon"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_filter_likes"
+                        android:contentDescription="Filter by Likes"
+                        android:padding="6dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewPosts"
                 android:layout_width="match_parent"
@@ -81,4 +117,3 @@
         app:itemIconTint="@color/selector_bottom_nav"
         app:itemTextColor="@color/selector_bottom_nav" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
