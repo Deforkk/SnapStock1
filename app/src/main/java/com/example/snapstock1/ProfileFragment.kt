@@ -12,15 +12,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.example.snapstock1.databinding.FragmentProfileBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.firestore.FieldPath
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 
 class ProfileFragment : BottomNavigationFragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private val firestore = FirebaseFirestore.getInstance()
+    private val posts = mutableListOf<QueryDocumentSnapshot>()
 
     private lateinit var userManager: UserManager
     private lateinit var userEmail: String
@@ -37,13 +44,57 @@ class ProfileFragment : BottomNavigationFragment() {
         userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         userEmail = arguments?.getString("userEmail") ?: ""
 
+        binding.recyclerViewPosts.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewPosts.adapter = SimplePostAdapter(posts, firestore)
+
         setupUI()
         loadUserProfile()
 
         // Настройка нижней панели навигации
         setupBottomNavigation(binding.bottomNavigation)
 
+        firestore.collection("favorite")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { documents ->
+                val postIds = documents.documents.mapNotNull { it.getString("postId") }
+
+                if (postIds.isNotEmpty()) {
+                    firestore.collection("pins")
+                        .whereIn(FieldPath.documentId(), postIds)
+                        .get()
+                        .addOnSuccessListener { postDocuments ->
+                            filterAndProcessPosts(postDocuments)
+                        }
+                        .addOnFailureListener { e ->
+                            // Обработка ошибки
+                            Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+                        }
+                }
+            }
+            .addOnFailureListener { e ->
+                // Обработка ошибки
+                Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
+            }
+
         return binding.root
+    }
+
+    private fun filterAndProcessPosts(documents: com.google.firebase.firestore.QuerySnapshot) {
+        posts.clear()
+
+        val userIds = mutableSetOf<String>()
+
+        for (doc in documents) {
+            posts.add(doc)
+            val userId = doc.getString("user_id")
+            if (!userId.isNullOrEmpty()) {
+                userIds.add(userId)
+            }
+        }
+
+        // Обновляем адаптер постов
+        binding.recyclerViewPosts.adapter?.notifyDataSetChanged()
     }
 
     private fun setupUI() {

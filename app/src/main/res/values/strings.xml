@@ -139,4 +139,65 @@
         <p>We hope this FAQ was helpful! Enjoy using Snapstock!</p>
         ]]>
     </string>
+    <string name="privacy_policy_text">
+            <![CDATA[
+      <h1>SnapStock Privacy Policy</h1>
+
+    <p>Your privacy is important to us. This Privacy Policy explains how SnapStock collects, uses, shares, and protects your information when you use our app and services.</p>
+
+    <h2>Information We Collect</h2>
+    <h3>1. Account Information</h3>
+    <p>When you create an account, we collect your email address and a password. You may also choose to sign in through social media, in which case we collect basic profile information shared by the social media platform.</p>
+
+    <h3>2. Content and Activity</h3>
+    <p>We collect and store content you create or interact with on SnapStock, including:</p>
+    <ul>
+        <li>Photos and illustrations you upload.</li>
+        <li>Descriptions, hashtags, and comments you add.</li>
+        <li>Collections and posts you like, favorite, or organize.</li>
+    </ul>
+
+    <h3>3. Technical Information</h3>
+    <p>We collect technical data such as your device type, operating system, and app usage patterns to enhance your experience.</p>
+
+    <h2>How We Use Your Information</h2>
+    <p>SnapStock uses your information to:</p>
+    <ul>
+        <li>Provide and improve app functionality, such as browsing, searching, and publishing posts.</li>
+        <li>Enable interactions with other users, including liking, commenting, and messaging.</li>
+        <li>Respond to technical support requests and address issues.</li>
+        <li>Ensure compliance with our <a href="#community-guidelines">Community Guidelines</a>.</li>
+    </ul>
+
+    <h2>Sharing of Information</h2>
+    <p>We do not share your personal information with third parties except in the following cases:</p>
+    <ul>
+        <li>When required by law or legal processes.</li>
+        <li>To protect the rights, property, or safety of SnapStock, our users, or others.</li>
+        <li>With your explicit consent.</li>
+    </ul>
+
+    <h2>Data Security</h2>
+    <p>We use modern encryption technologies to safeguard your data and protect it from unauthorized access.</p>
+
+    <h2>Community Guidelines</h2>
+    <p>To maintain a respectful and safe environment, all users must adhere to the following rules:</p>
+    <ul>
+        <li>Do not post offensive or inappropriate content.</li>
+        <li>Respect copyright laws and only upload images you own or have permission to use.</li>
+        <li>Be respectful and polite when interacting with others.</li>
+    </ul>
+
+    <h2>Your Rights</h2>
+    <p>You have the right to access, update, or delete your account and personal information at any time. To exercise these rights, please contact us through the app\'s "Contact Us" feature.</p>
+
+    <h2>Changes to the Privacy Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be communicated through the app or email.</p>
+
+    <h2>Contact Us</h2>
+    <p>If you have any questions or concerns about this Privacy Policy, please reach out to our technical support team via the "Contact Us" button in the app settings.</p>
+
+    <p>Thank you for using SnapStock!</p>
+        ]]>
+    </string>
 </resources>

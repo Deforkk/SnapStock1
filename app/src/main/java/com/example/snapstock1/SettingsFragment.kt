@@ -1,10 +1,7 @@
 package com.example.snapstock1
 
 import android.app.AlertDialog
-import android.content.ActivityNotFoundException
-import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.compose.ui.semantics.text
-import androidx.core.content.FileProvider
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -21,9 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.EmailAuthProvider
 
 import android.content.Intent
-
-import java.io.File
-import java.io.FileOutputStream
 
 
 class SettingsFragment : Fragment() {
@@ -48,7 +40,10 @@ class SettingsFragment : Fragment() {
             openFaqPage()
         }
 
-
+        val privacyPolicyButton = view.findViewById<Button>(R.id.PrivacyPolicyButton)
+        privacyPolicyButton.setOnClickListener {
+            openPrivacyPolicyPage()
+        }
 
         userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
         userEmail = FirebaseAuth.getInstance().currentUser?.email ?: "Unknown Email"
@@ -223,6 +218,12 @@ class SettingsFragment : Fragment() {
     // Показать диалог для FAQ
     private fun openFaqPage() {
         val intent = Intent(requireContext(), FaqActivity::class.java)
+        startActivity(intent)
+    }
+
+    // Показать диалог для FAQ
+    private fun openPrivacyPolicyPage() {
+        val intent = Intent(requireContext(), PrivacyPolicyActivity::class.java)
         startActivity(intent)
     }
 }

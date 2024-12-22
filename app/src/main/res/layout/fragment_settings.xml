@@ -62,5 +62,12 @@
         android:text="Snapstock FAQ"
         android:textColor="@android:color/holo_blue_dark"/>
 
+    <Button
+        android:id="@+id/PrivacyPolicyButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Snapstock Privacy Policy"
+        android:textColor="@android:color/holo_blue_dark" />
+
 
 </LinearLayout>
